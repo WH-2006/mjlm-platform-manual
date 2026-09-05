@@ -114,6 +114,99 @@ tr:hover td{background:#fafbfe}
 .video-block .video-meta{font-size:12.5px;color:var(--text-3);margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .video-block .video-meta span{background:#f1f5f9;border:1px solid var(--border);padding:2px 10px;border-radius:999px;font-weight:600}
 
+/* ===== 视频展示台（类似睿枢AI教程风格） ===== */
+.video-showcase{
+  background:linear-gradient(135deg,#1e1b4b 0%,#312e81 45%,#4f46e5 100%);
+  border-radius:16px;
+  padding:22px;
+  margin:24px 0 6px;
+  color:#fff;
+  box-shadow:0 20px 50px rgba(79,70,229,.22);
+}
+.video-showcase .showcase-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:14px;
+}
+.video-showcase .showcase-title{
+  font-size:16px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+}
+.video-showcase .showcase-badges{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.video-showcase .showcase-badges span{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  color:#e0e7ff;
+  padding:5px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.video-showcase video{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:12px;
+  background:#0f172a;
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+  display:block;
+}
+.video-showcase .scene-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+.video-showcase .scene-btn{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  padding:12px 14px;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  text-align:left;
+  transition:all .2s ease;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.video-showcase .scene-btn:hover{
+  background:rgba(255,255,255,.2);
+  border-color:rgba(255,255,255,.35);
+  transform:translateY(-1px);
+}
+.video-showcase .scene-btn .play-icon{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:rgba(255,255,255,.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9px;
+  flex-shrink:0;
+}
+@media(max-width:760px){
+  .video-showcase{padding:16px}
+  .video-showcase .showcase-header{flex-direction:column;align-items:flex-start}
+  .video-showcase .scene-grid{grid-template-columns:1fr}
+}
+
 /* FAQ 折叠 */
 details{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:var(--card);overflow:hidden}
 details summary{cursor:pointer;padding:13px 18px;font-weight:700;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:10px;color:var(--text)}
@@ -486,13 +579,26 @@ response = client.chat.completions.create(
   </div>
 
   <h3>视频教程：第 1-8 章完整讲解</h3>
-  <div class="video-block">
+  <div class="video-showcase">
+    <div class="showcase-header">
+      <div class="showcase-title">🎬 第 1-8 章完整讲解</div>
+      <div class="showcase-badges">
+        <span>⏱ 约 12 分 35 秒</span>
+        <span>🖥 高清录制</span>
+        <span>💬 中文旁白 + 字幕</span>
+        <span>📑 8 个章节</span>
+      </div>
+    </div>
     <video controls preload="metadata" src="漫剧联盟平台使用教程-第1-8章-最终版.mp4"></video>
-    <div class="video-meta">
-      <span>🎬 第 1-8 章</span>
-      <span>⏱ 约 12 分 35 秒</span>
-      <span>💬 含同步字幕</span>
-      <span>覆盖：平台简介 → 注册登录 → 控制台 → 快速上手 → API 调用 → 工具接入</span>
+    <div class="scene-grid">
+      <button class="scene-btn" onclick="jumpToSection('sec-intro')"><span class="play-icon">▶</span>1. 平台简介</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-register')"><span class="play-icon">▶</span>2. 注册与登录</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-console')"><span class="play-icon">▶</span>3. 认识控制台</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-quick')"><span class="play-icon">▶</span>4. 快速上手三步走</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-playground')"><span class="play-icon">▶</span>5. 在线体验（免代码）</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-api')"><span class="play-icon">▶</span>6. API 调用详解</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-advanced')"><span class="play-icon">▶</span>7. 进阶：流式与多轮</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-tools')"><span class="play-icon">▶</span>8. 接入常用工具</button>
     </div>
   </div>
 </section>
@@ -615,13 +721,22 @@ response = client.chat.completions.create(
   <div class="tip"><span class="icon">💡</span><div>新管理员上手建议路径：登录 → 渠道页看懂列表 → 给一个测试渠道跑通「测试」→ 令牌页创建一个令牌并实际调用一次 → 日志页核对该次调用明细。走完这条链路，后台的核心逻辑就通了。</div></div>
 
   <h3>视频教程：第 9 章管理后台讲解</h3>
-  <div class="video-block">
+  <div class="video-showcase">
+    <div class="showcase-header">
+      <div class="showcase-title">🎬 第 9 章管理后台讲解</div>
+      <div class="showcase-badges">
+        <span>⏱ 约 10 分 20 秒</span>
+        <span>🖥 高清录制</span>
+        <span>💬 中文旁白 + 字幕</span>
+        <span>📑 4 个核心场景</span>
+      </div>
+    </div>
     <video controls preload="metadata" src="漫剧联盟平台使用教程-第9章-最终版.mp4"></video>
-    <div class="video-meta">
-      <span>🎬 第 9 章</span>
-      <span>⏱ 约 10 分 20 秒</span>
-      <span>💬 含同步字幕</span>
-      <span>覆盖：管理后台登录 → 页面地图 → 渠道管理 → 模型路由与定价</span>
+    <div class="scene-grid">
+      <button class="scene-btn" onclick="jumpToSection('sec-admin')"><span class="play-icon">▶</span>登录管理后台</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-admin')"><span class="play-icon">▶</span>后台页面地图</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-admin')"><span class="play-icon">▶</span>渠道管理日常操作</button>
+      <button class="scene-btn" onclick="jumpToSection('sec-admin')"><span class="play-icon">▶</span>模型路由与定价</button>
     </div>
   </div>
 </section>
@@ -641,6 +756,14 @@ function copyCode(btn){
     btn.textContent = "已复制✓";
     setTimeout(function(){ btn.textContent = "复制"; }, 1600);
   });
+}
+function jumpToSection(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  el.style.transition='box-shadow .3s ease';
+  el.style.boxShadow='0 0 0 3px rgba(79,70,229,.35)';
+  setTimeout(function(){ el.style.boxShadow=''; }, 1400);
 }
 // 侧边栏高亮当前章节
 var sections = document.querySelectorAll("section.doc");
